@@ -16,7 +16,7 @@
     "passport": "*",
     "passport-jwt": "*"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["express", "angular", "javascript", "typescript", "authentication", "fullstack", "jsonwebtoken", "nodejs"],
+  "author": "KurtCoVayne4-John Alejandro Gonzalez",
   "license": "ISC"
 }
