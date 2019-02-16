@@ -15,12 +15,12 @@ const User_1 = require("../models/User");
 const secret_1 = __importDefault(require("../config/secret"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class UsersController {
-    list(req, res) {
+    list(res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield User_1.User.find()
                 .then(users => {
                 if (users.length == 0) {
-                    res.status(204).json({ text: "There's no users yet" });
+                    res.status(204).json({ statusText: "There's no users yet" });
                 }
                 else {
                     res.json(users);
@@ -38,48 +38,36 @@ class UsersController {
                 username,
                 password
             });
-            User_1.addUser(newUser, (err, user) => {
-                if (err) {
-                    res.json({ ok: false, message: 'Failed to register user' });
-                }
-                else {
-                    res.json({ ok: true, message: 'User registered' });
-                }
-            });
+            res.json(yield User_1.addUser(newUser));
         });
     }
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { username, password } = req.body;
-            User_1.getUserByUsername(username, (err, user) => {
-                if (err)
-                    throw err;
-                if (!user) {
-                    return res.json({ ok: false, message: 'User with that username dont found' });
-                }
-                User_1.comparePassword(password, user.password, (err, isMatch) => {
-                    if (err)
-                        throw err;
-                    if (isMatch) {
-                        const token = jsonwebtoken_1.default.sign(user.toJSON(), secret_1.default.jwtSecret, {
-                            expiresIn: 604800
-                        });
-                        res.json({
-                            ok: true,
-                            token: 'JWT ' + token,
-                            user: {
-                                id: user._id,
-                                name: user.name,
-                                username: user.username,
-                                email: user.email
-                            }
-                        });
-                    }
-                    else {
-                        return res.json({ ok: false, message: 'Wrong password' });
+            const user = yield User_1.existingUser(username, username);
+            if (!user) {
+                return res.json({ ok: false, statusText: 'User with that username/mail dont found' });
+            }
+            if (yield User_1.comparePassword(password, user.password)) {
+                const token = jsonwebtoken_1.default.sign(user, secret_1.default.jwtSecret, {
+                    expiresIn: 604800 // 1 week
+                });
+                res.json({
+                    ok: true,
+                    body: {
+                        token: 'JWT ' + token,
+                        user: {
+                            id: user._id,
+                            name: user.name,
+                            username: user.username,
+                            email: user.email
+                        }
                     }
                 });
-            });
+            }
+            else {
+                return res.json({ ok: false, statusText: 'Wrong password' });
+            }
         });
     }
     profile(req, res) {
