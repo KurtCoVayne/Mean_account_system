@@ -1,0 +1,22 @@
+{
+  "name": "build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "cors": "^2.8.5",
+    "express": "~4.16.0",
+    "jsonwebtoken": "*",
+    "mongoose": "^5.4.10",
+    "morgan": "~1.9.0",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
