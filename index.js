@@ -17,9 +17,9 @@ class Server {
         this.app = express_1.default();
         this.config();
         this.routes();
-    }
+    }//dVxdMyx1HmhxM1sH
     config() {
-        const MONGO_URI = 'mongodb://localhost/usercrud_db';
+        const MONGO_URI = 'mongodb://test0:dVxdMyx1HmhxM1sH@cluster0-shard-00-00-ojqdw.mongodb.net:27017,cluster0-shard-00-01-ojqdw.mongodb.net:27017,cluster0-shard-00-02-ojqdw.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true';
         mongoose_1.default.set('useFindAndModify', true);
         mongoose_1.default.connect(MONGO_URI, {
             useCreateIndex: true,
