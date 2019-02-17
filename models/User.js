@@ -39,10 +39,11 @@ exports.existingUser = function (username, email) {
 };
 exports.getUserById = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
+        // User.findById(id, calback)
         try {
             const user = yield exports.User.findById(id);
             if (user) {
-                return user.toJSON();
+                return user;
             }
             return false;
         }

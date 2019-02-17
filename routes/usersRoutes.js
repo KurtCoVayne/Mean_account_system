@@ -14,7 +14,6 @@ class UsersRoutes {
     }
     config() {
         passport_1.default(passport);
-        this.router.get('/', usersController_1.default.list);
         this.router.get('/profile', passport.authenticate('jwt', { session: false }), usersController_1.default.profile);
         this.router.post('/register', usersController_1.default.logup);
         this.router.post('/login', usersController_1.default.login);

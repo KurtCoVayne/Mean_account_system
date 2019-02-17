@@ -16,17 +16,19 @@ const opts = {
     jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderWithScheme('jwt')
 };
 exports.passportConfig = function (passport) {
-    passport.use(new passport_jwt_1.Strategy(opts, (jwt_payload, done) => __awaiter(this, void 0, void 0, function* () {
-        const check = yield User_1.getUserById(jwt_payload._id);
-        if (check) {
-            return done(null, check);
-        }
-        else if (check instanceof Error) {
-            return done(check, false);
-        }
-        else {
-            return done(null, false);
-        }
-    })));
+    return __awaiter(this, void 0, void 0, function* () {
+        passport.use(new passport_jwt_1.Strategy(opts, (jwt_payload, done) => __awaiter(this, void 0, void 0, function* () {
+            const check = yield User_1.getUserById(jwt_payload._id);
+            if (check instanceof Error) {
+                return done(check, false);
+            }
+            if (check) {
+                return done(null, check);
+            }
+            else {
+                return done(null, false);
+            }
+        })));
+    });
 };
 exports.default = exports.passportConfig;

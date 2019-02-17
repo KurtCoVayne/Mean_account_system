@@ -15,20 +15,6 @@ const User_1 = require("../models/User");
 const secret_1 = __importDefault(require("../config/secret"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class UsersController {
-    list(res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield User_1.User.find()
-                .then(users => {
-                if (users.length == 0) {
-                    res.status(204).json({ statusText: "There's no users yet" });
-                }
-                else {
-                    res.json(users);
-                }
-            })
-                .catch(err => console.error(err.message));
-        });
-    }
     logup(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, email, username, password } = req.body;
@@ -71,9 +57,7 @@ class UsersController {
         });
     }
     profile(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            res.json({ user: req.user });
-        });
+        res.json({ body: { user: req.user } });
     }
 }
 exports.usersController = new UsersController();
