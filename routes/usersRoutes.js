@@ -13,15 +13,11 @@ class UsersRoutes {
         this.config();
     }
     config() {
-        // passportConfig(passport)
         passport_1.default(passport);
-        //Ruta de registro, ruta de mirar perfil y configurarlo, ruta de eliminar perfil ruta de inicio de seccion
         this.router.get('/', usersController_1.default.list);
         this.router.get('/profile', passport.authenticate('jwt', { session: false }), usersController_1.default.profile);
         this.router.post('/register', usersController_1.default.logup);
         this.router.post('/login', usersController_1.default.login);
-        // this.router.put('/:id', usersController.update)
-        // this.router.delete('/:id', usersController.delete);
     }
 }
 const usersRoutes = new UsersRoutes();
