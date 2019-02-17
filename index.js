@@ -26,7 +26,7 @@ class Server {
             useNewUrlParser: true,
         })
             .then(() => console.log('DB is connected'));
-        this.app.set('port', process.env.PORT);
+        this.app.set('port', process.env.PORT || 3000);
         // this.app.use(morgan_1.default('dev'));
         this.app.use(cors_1.default());
         this.app.use(express_1.default.json());
